@@ -32,12 +32,12 @@ def process_data(data):
     return [porter_stemmer.stem(word) for word in filtered_tokens]
 
 
-def get_email_training_data(folder_path, training=True):
+def get_email_training_data(folder_path, test_sub_folder='part10'):
     normal = defaultdict(lambda: defaultdict(int))
     spam = defaultdict(lambda: defaultdict(int))
 
     for sub_folder in os.listdir(folder_path):
-        if sub_folder == 'part10' and training:
+        if sub_folder == test_sub_folder:
             continue
 
         full_sub_folder_path = os.path.join(folder_path, sub_folder)

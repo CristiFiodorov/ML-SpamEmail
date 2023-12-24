@@ -1,5 +1,4 @@
 import json
-import os.path
 from collections import defaultdict
 
 from utils import process_data
