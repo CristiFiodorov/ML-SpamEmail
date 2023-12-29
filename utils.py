@@ -50,6 +50,33 @@ def get_email_training_data(folder_path, test_sub_folder='part10'):
 
             if file.startswith('spm'):
                 for token in processed_tokens:
+                    spam[os.path.join(sub_folder, file)][token] += 1
+                continue
+            for token in processed_tokens:
+                normal[os.path.join(sub_folder, file)][token] += 1
+
+    return {'spam': spam, 'non_spam': normal}
+
+
+def get_email_training_data_without_file(folder_path, test_file):
+    normal = defaultdict(lambda: defaultdict(int))
+    spam = defaultdict(lambda: defaultdict(int))
+
+    for sub_folder in os.listdir(folder_path):
+
+        full_sub_folder_path = os.path.join(folder_path, sub_folder)
+
+        for file in os.listdir(full_sub_folder_path):
+            if os.path.join(sub_folder, file) == test_file:
+                continue
+
+            full_file_path = os.path.join(full_sub_folder_path, file)
+            with open(full_file_path) as f:
+                data = f.read()
+            processed_tokens = process_data(data)
+
+            if file.startswith('spm'):
+                for token in processed_tokens:
                     spam[file][token] += 1
                 continue
             for token in processed_tokens:
